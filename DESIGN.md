@@ -14,5 +14,7 @@ The website is an image-led Turkish showcase for the provided illustrated bookma
 
 - The primary action scrolls to the design collection.
 - Each image opens a keyboard-operable photo viewer with previous/next controls and Escape support.
+- Five featured bookmarks fan out on hover, keyboard focus, or the explicit touch toggle.
+- The full 78-photo catalog can be searched by image code.
 - Motion is brief and optional under reduced-motion preferences.
-- Layout adapts from four-column desktop to two-column mobile.
+- Layout adapts from five-column catalog browsing to two-column mobile.

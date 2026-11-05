@@ -20,12 +20,13 @@ The site showcases four illustrated bookmark designs through their real supplied
 
 ## Capabilities and Constraints
 
-- The supplied archive contains 13 photographs in four design groups.
+- The original archive contains 13 photographs in four design groups; the additional archive contains 78 individually coded bookmark photographs.
+- Visitors can search the additional photographs by their printed filename code.
 - Prices, ordering details, contact information, dimensions, and material are not provided and must not be invented.
 
 ## Evidence on Hand
 
-The 13 product photographs supplied in `assets/bookmarks/`. No purchase or contact destination was supplied.
+The 13 product photographs supplied in `assets/bookmarks/` and 78 photographs in `assets/bookmarks/catalog/`. No purchase or contact destination was supplied.
 
 ## Product Principles
 

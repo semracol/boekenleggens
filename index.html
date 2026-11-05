@@ -48,10 +48,14 @@
           <div class="hero-orbit orbit-one" aria-hidden="true"></div>
           <div class="hero-orbit orbit-two" aria-hidden="true"></div>
           <div class="hero-sticker" aria-hidden="true"><span>sayfana<br>bir iz bırak</span><span class="sticker-star">✳</span></div>
-          <figure class="hero-photo">
-            <img src="assets/bookmarks/17de4547-IMG_0961_01.jpg" alt="Mavi ortancalar ve deniz kabuklarıyla resmedilmiş kitap ayracı" fetchpriority="high">
-            <figcaption>Deniz kenarında <span>↗</span></figcaption>
-          </figure>
+          <div class="bookmark-fan" role="group" aria-label="Popüler beş kitap ayracı. Üzerine gelin veya klavyeyle odaklanın.">
+            <button class="fan-card" type="button" data-feature="BM-AB-015-C.jpg" aria-label="Popüler ayraç BM-AB-015'i incele"><img src="assets/bookmarks/catalog/BM-AB-015-C.jpg" alt="Mavi ve altın tonlarında masalsı bir sahneye sahip kitap ayracı"></button>
+            <button class="fan-card" type="button" data-feature="BM-CH-008-C.jpg" aria-label="Popüler ayraç BM-CH-008'i incele"><img src="assets/bookmarks/catalog/BM-CH-008-C.jpg" alt="Çiçekli bir sahnede illüstrasyonlu kitap ayracı"></button>
+            <button class="fan-card" type="button" data-feature="BM-FL-001-C.jpg" aria-label="Popüler ayraç BM-FL-001'i incele"><img src="assets/bookmarks/catalog/BM-FL-001-C.jpg" alt="Mavi deniz ve çiçek temalı kitap ayracı"></button>
+            <button class="fan-card" type="button" data-feature="BM-XM-006-G.jpg" aria-label="Popüler ayraç BM-XM-006'yı incele"><img src="assets/bookmarks/catalog/BM-XM-006-G.jpg" alt="Karlı bir köy sahnesiyle resmedilmiş kitap ayracı"></button>
+            <button class="fan-card" type="button" data-feature="BM-AN-009-C.jpg" aria-label="Popüler ayraç BM-AN-009'u incele"><img src="assets/bookmarks/catalog/BM-AN-009-C.jpg" alt="Atkılı sevimli bir geyik illüstrasyonlu kitap ayracı"></button>
+            <div class="fan-label"><span>Popüler 5</span><button class="fan-toggle" type="button" aria-expanded="false">Beşini aç <span aria-hidden="true">↗</span></button></div>
+          </div>
           <span class="hero-spark spark-one" aria-hidden="true">✳</span>
           <span class="hero-spark spark-two" aria-hidden="true">✳</span>
         </div>
@@ -63,7 +67,7 @@
           <div>
             <h2 id="collection-title">Her biri başka<br>bir <em>hikâye.</em></h2>
           </div>
-          <p class="section-intro">Dört ayrı tasarım, on üç fotoğraf. Yakından bakmak için bir ayracı seç.</p>
+          <p class="section-intro">İlk fotoğraf grubundan dört tasarım ve yakından inceleyebileceğin on üç kare.</p>
           <span class="heading-stamp" aria-hidden="true">✳</span>
         </div>
         <div class="design-grid">
@@ -96,6 +100,23 @@
             <div class="design-caption"><div><h3>Pembe çiçek</h3><p>Tek bir çiçek, rengârenk bir çerçeve.</p></div><span class="photo-count">1 fotoğraf</span></div>
           </article>
         </div>
+      </section>
+
+      <section class="catalog" aria-labelledby="catalog-title">
+        <div class="catalog-heading">
+          <div>
+            <h2 id="catalog-title">Bütün <em>ayraçlar.</em></h2>
+          </div>
+          <label class="catalog-search">
+            <span class="sr-only">Ayraç koduyla ara</span>
+            <span aria-hidden="true">⌕</span>
+            <input id="catalog-search" type="search" placeholder="Kodla ara" autocomplete="off">
+          </label>
+        </div>
+        <p class="catalog-count" id="catalog-count" aria-live="polite">78 tasarım</p>
+        <div class="catalog-grid" id="catalog-grid" aria-label="Tüm kitap ayraçları"></div>
+        <p class="catalog-empty" id="catalog-empty" hidden>Bu kodla eşleşen ayraç bulunamadı.</p>
+        <p class="catalog-error" id="catalog-error" role="alert" hidden>Ayraç fotoğrafları şu an yüklenemedi. Sayfayı yenileyip tekrar deneyebilirsin.</p>
       </section>
 
       <section class="closing" aria-labelledby="closing-title">

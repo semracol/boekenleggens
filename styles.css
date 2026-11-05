@@ -64,12 +64,12 @@ h1, h2, h3, p, figure { margin-top: 0; }
 .carousel-image-open { position: absolute; right: 16px; bottom: 16px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 19px; opacity: 0; transform: translateY(5px); transition: opacity .2s ease, transform .2s ease; }
 .carousel-slide:hover .carousel-image-open, .carousel-slide:focus-visible .carousel-image-open { opacity: 1; transform: none; }
 .carousel-incoming { z-index: 1; opacity: 0; pointer-events: none; }
-.carousel-scene.is-turning-next .carousel-slide:not(.carousel-incoming) { opacity: 0; transform: translateX(-120px) rotateY(68deg) rotateZ(-5deg) scale(.9); transform-origin: left center; }
-.carousel-scene.is-turning-next .carousel-incoming { z-index: 3; opacity: 1; transform: translateX(0) rotateY(0); }
-.carousel-scene.is-turning-prev .carousel-slide:not(.carousel-incoming) { opacity: 0; transform: translateX(120px) rotateY(-68deg) rotateZ(5deg) scale(.9); transform-origin: right center; }
-.carousel-scene.is-turning-prev .carousel-incoming { z-index: 3; opacity: 1; transform: translateX(0) rotateY(0); }
-.carousel-scene .carousel-incoming { transform: translateX(115px) rotateY(-38deg) scale(.94); transform-origin: left center; }
-.carousel-scene.is-turning-prev .carousel-incoming { transform: translateX(-115px) rotateY(38deg) scale(.94); transform-origin: right center; }
+.carousel-scene.is-turning-next .carousel-slide:not(.carousel-incoming) { opacity: 0; transform: rotateY(68deg) rotateZ(-5deg) scale(.9); transform-origin: left center; }
+.carousel-scene.is-turning-next .carousel-incoming { z-index: 3; opacity: 1; transform: rotateY(0); }
+.carousel-scene.is-turning-prev .carousel-slide:not(.carousel-incoming) { opacity: 0; transform: rotateY(-68deg) rotateZ(5deg) scale(.9); transform-origin: right center; }
+.carousel-scene.is-turning-prev .carousel-incoming { z-index: 3; opacity: 1; transform: rotateY(0); }
+.carousel-scene .carousel-incoming { transform: rotateY(-38deg) scale(.94); transform-origin: left center; }
+.carousel-scene.is-turning-prev .carousel-incoming { transform: rotateY(38deg) scale(.94); transform-origin: right center; }
 .carousel-hint { position: absolute; z-index: 4; left: 50%; bottom: 17px; width: max-content; color: #e0ead8; font: 600 9px/1 var(--body); letter-spacing: .16em; transform: translateX(-50%); }
 .carousel-controls { display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 15px; padding: 0 8px; color: var(--white); }
 .carousel-prev, .carousel-next { width: 42px; height: 42px; display: grid; place-items: center; padding: 0; border: 1px solid rgba(255,255,255,.55); border-radius: 50%; background: transparent; color: var(--lime); font-size: 22px; transition: color .2s ease, background .2s ease, transform .2s ease; }

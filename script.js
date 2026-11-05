@@ -46,12 +46,24 @@ const catalogCount = document.querySelector("#catalog-count");
 const catalogEmpty = document.querySelector("#catalog-empty");
 const catalogError = document.querySelector("#catalog-error");
 const catalogSearch = document.querySelector("#catalog-search");
-const fan = document.querySelector(".bookmark-fan");
-const fanToggle = document.querySelector(".fan-toggle");
+const bookmarkCarousel = document.querySelector(".bookmark-carousel");
+const carouselScene = document.querySelector(".carousel-scene");
+const carouselSlide = document.querySelector(".carousel-slide:not(.carousel-incoming)");
+const carouselIncoming = document.querySelector(".carousel-incoming");
+const carouselImage = carouselSlide.querySelector(".carousel-image");
+const carouselIncomingImage = carouselIncoming.querySelector(".carousel-image");
+const carouselPosition = document.querySelector(".carousel-position");
+const carouselTrackFill = document.querySelector(".carousel-track-fill");
+const carouselCurrentCode = document.querySelector(".carousel-current-code");
+const carouselPrev = document.querySelector(".carousel-prev");
+const carouselNext = document.querySelector(".carousel-next");
 let activePhotos = [];
 let activeImage = 0;
 let opener = null;
 let catalogPhotos = [];
+let carouselIndex = 0;
+let carouselBusy = false;
+let suppressCarouselClick = false;
 
 function showImage() {
   const photo = activePhotos[activeImage];
@@ -114,6 +126,34 @@ function renderCatalog() {
   catalogEmpty.hidden = visiblePhotos.length > 0;
 }
 
+function updateCarousel(direction) {
+  if (carouselBusy || catalogPhotos.length === 0) return;
+  carouselBusy = true;
+  const nextIndex = (carouselIndex + direction + catalogPhotos.length) % catalogPhotos.length;
+  const filename = catalogPhotos[nextIndex];
+  carouselIncomingImage.src = `assets/bookmarks/catalog/${filename}`;
+  carouselIncomingImage.alt = `${filename.replace(/\.jpg$/i, "")} kodlu kitap ayracı`;
+  carouselIncoming.inert = true;
+  carouselIncoming.setAttribute("aria-hidden", "true");
+  carouselScene.classList.add(direction > 0 ? "is-turning-next" : "is-turning-prev");
+
+  const finishTurn = () => {
+    carouselIndex = nextIndex;
+    carouselImage.src = carouselIncomingImage.src;
+    carouselImage.alt = carouselIncomingImage.alt;
+    carouselSlide.setAttribute("aria-label", `${filename.replace(/\.jpg$/i, "")} kodlu ayraç fotoğrafını büyüt`);
+    carouselPosition.innerHTML = `${String(carouselIndex + 1).padStart(2, "0")} <i>/ ${catalogPhotos.length}</i>`;
+    carouselCurrentCode.textContent = filename.replace(/\.jpg$/i, "");
+    carouselTrackFill.style.transform = `scaleX(${(carouselIndex + 1) / catalogPhotos.length})`;
+    carouselScene.classList.remove("is-turning-next", "is-turning-prev");
+    carouselIncoming.inert = true;
+    carouselIncoming.setAttribute("aria-hidden", "true");
+    carouselBusy = false;
+  };
+
+  window.setTimeout(finishTurn, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 660);
+}
+
 async function loadCatalog() {
   try {
     const response = await fetch("assets/bookmarks/catalog/photos.json");
@@ -124,6 +164,15 @@ async function loadCatalog() {
     }
     catalogPhotos = filenames;
     renderCatalog();
+    carouselIndex = catalogPhotos.indexOf("BM-AB-015-C.jpg");
+    if (carouselIndex < 0) carouselIndex = 0;
+    const filename = catalogPhotos[carouselIndex];
+    carouselImage.src = `assets/bookmarks/catalog/${filename}`;
+    carouselImage.alt = `${filename.replace(/\.jpg$/i, "")} kodlu kitap ayracı`;
+    carouselSlide.setAttribute("aria-label", `${filename.replace(/\.jpg$/i, "")} kodlu ayraç fotoğrafını büyüt`);
+    carouselPosition.innerHTML = `${String(carouselIndex + 1).padStart(2, "0")} <i>/ ${catalogPhotos.length}</i>`;
+    carouselCurrentCode.textContent = filename.replace(/\.jpg$/i, "");
+    carouselTrackFill.style.transform = `scaleX(${(carouselIndex + 1) / catalogPhotos.length})`;
   } catch (error) {
     catalogCount.textContent = "Ayraç fotoğrafları yüklenemedi";
     catalogError.hidden = false;
@@ -138,17 +187,48 @@ document.querySelectorAll(".design-image").forEach((button) => {
   });
 });
 
-document.querySelectorAll(".fan-card").forEach((button) => {
-  button.addEventListener("click", () => {
-    const filename = button.dataset.feature;
-    const alt = button.querySelector("img").alt;
-    openPhotos([{
-      src: `assets/bookmarks/catalog/${filename}`,
-      title: filename.replace(/\.jpg$/i, ""),
-      alt,
-    }], button);
-  });
+carouselSlide.addEventListener("click", () => {
+  if (carouselBusy) return;
+  if (suppressCarouselClick) {
+    suppressCarouselClick = false;
+    return;
+  }
+  const filename = catalogPhotos[carouselIndex];
+  if (!filename) return;
+  openPhotos([{
+    src: `assets/bookmarks/catalog/${filename}`,
+    title: filename.replace(/\.jpg$/i, ""),
+    alt: carouselImage.alt,
+  }], carouselSlide);
 });
+carouselPrev.addEventListener("click", () => updateCarousel(-1));
+carouselNext.addEventListener("click", () => updateCarousel(1));
+bookmarkCarousel.addEventListener("keydown", (event) => {
+  if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+  event.preventDefault();
+  updateCarousel(event.key === "ArrowRight" ? 1 : -1);
+});
+let dragStartX = null;
+carouselScene.addEventListener("pointerdown", (event) => {
+  if (event.button !== 0) return;
+  dragStartX = event.clientX;
+});
+carouselScene.addEventListener("pointerup", (event) => {
+  if (dragStartX === null) return;
+  const distance = event.clientX - dragStartX;
+  dragStartX = null;
+  if (Math.abs(distance) < 45) return;
+  suppressCarouselClick = true;
+  updateCarousel(distance < 0 ? 1 : -1);
+  window.setTimeout(() => { suppressCarouselClick = false; }, 0);
+});
+carouselScene.addEventListener("pointercancel", () => {
+  dragStartX = null;
+});
+carouselScene.addEventListener("wheel", (event) => {
+  if (Math.abs(event.deltaX) < 30) return;
+  updateCarousel(event.deltaX > 0 ? 1 : -1);
+}, { passive: true });
 
 catalogGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-catalog-photo]");
@@ -181,32 +261,6 @@ document.querySelector(".lightbox-prev").addEventListener("click", () => {
 document.querySelector(".lightbox-next").addEventListener("click", () => {
   activeImage = (activeImage + 1) % activePhotos.length;
   showImage();
-});
-
-function setFanExpanded(expanded) {
-  fan.classList.toggle("is-open", expanded);
-  fanToggle.setAttribute("aria-expanded", String(expanded));
-  fanToggle.querySelector("span").textContent = expanded ? "Kapat" : "↗";
-}
-
-fan.addEventListener("pointerenter", (event) => {
-  if (event.pointerType === "mouse") setFanExpanded(true);
-});
-fan.addEventListener("pointerleave", (event) => {
-  if (event.pointerType === "mouse") setFanExpanded(fan.contains(document.activeElement));
-});
-fan.addEventListener("focusin", (event) => {
-  if (event.target !== fanToggle) setFanExpanded(true);
-});
-fan.addEventListener("focusout", () => {
-  requestAnimationFrame(() => {
-    if (!fan.contains(document.activeElement) && !fan.matches(":hover")) setFanExpanded(false);
-  });
-});
-fanToggle.addEventListener("click", () => {
-  const expanded = !fan.classList.contains("is-open");
-  setFanExpanded(expanded);
-  if (!expanded) fanToggle.blur();
 });
 
 closeButton.addEventListener("click", () => dialog.close());

@@ -76,13 +76,26 @@ function showImage() {
   document.querySelector(".lightbox-next").hidden = !multiple;
 }
 
-function openPhotos(photos, source) {
+function openPhotos(photos, source, startIndex = 0) {
   activePhotos = photos;
-  activeImage = 0;
+  activeImage = startIndex;
   opener = source;
   showImage();
   dialog.showModal();
   closeButton.focus();
+}
+
+function photoForCatalog(filename) {
+  const photoTitle = filename.replace(/\.jpg$/i, "");
+  return {
+    src: `assets/bookmarks/catalog/${filename}`,
+    title: photoTitle,
+    alt: `${photoTitle} kodlu kitap ayracı`,
+  };
+}
+
+function photosForCatalog() {
+  return catalogPhotos.map(photoForCatalog);
 }
 
 function photosForProduct(product) {
@@ -195,11 +208,7 @@ carouselSlide.addEventListener("click", () => {
   }
   const filename = catalogPhotos[carouselIndex];
   if (!filename) return;
-  openPhotos([{
-    src: `assets/bookmarks/catalog/${filename}`,
-    title: filename.replace(/\.jpg$/i, ""),
-    alt: carouselImage.alt,
-  }], carouselSlide);
+  openPhotos(photosForCatalog(), carouselSlide, carouselIndex);
 });
 carouselPrev.addEventListener("click", () => updateCarousel(-1));
 carouselNext.addEventListener("click", () => updateCarousel(1));
@@ -234,11 +243,9 @@ catalogGrid.addEventListener("click", (event) => {
   const button = event.target.closest("[data-catalog-photo]");
   if (!button) return;
   const filename = button.dataset.catalogPhoto;
-  openPhotos([{
-    src: `assets/bookmarks/catalog/${filename}`,
-    title: filename.replace(/\.jpg$/i, ""),
-    alt: `${filename.replace(/\.jpg$/i, "")} kodlu kitap ayracı`,
-  }], button);
+  const photoIndex = catalogPhotos.indexOf(filename);
+  if (photoIndex < 0) return;
+  openPhotos(photosForCatalog(), button, photoIndex);
 });
 
 catalogSearch.addEventListener("input", renderCatalog);

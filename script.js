@@ -128,7 +128,10 @@ function renderCatalog() {
     const caption = document.createElement("span");
     caption.className = "catalog-code";
     caption.textContent = titleText;
-    button.append(photo, caption);
+    const price = document.createElement("span");
+    price.className = "catalog-price";
+    price.textContent = "€4,50";
+    button.append(photo, caption, price);
     return button;
   });
 

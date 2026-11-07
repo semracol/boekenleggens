@@ -23,6 +23,7 @@ button { cursor: pointer; }
 .skip-link { position: fixed; z-index: 20; top: 8px; left: 8px; padding: 12px 18px; transform: translateY(-150%); background: var(--lime); color: var(--ink-deep); }
 .skip-link:focus { transform: none; }
 
+.site-notice { min-height: 34px; padding: 8px 18px; background: var(--lime); color: var(--ink-deep); text-align: center; font-size: 11px; font-weight: 700; letter-spacing: .04em; }
 .topbar { height: 82px; padding: 0 6.5vw; display: flex; align-items: center; justify-content: space-between; background: var(--ink); color: var(--white); }
 .wordmark { display: inline-flex; align-items: center; gap: 10px; font: 700 20px/1 var(--display); letter-spacing: -.06em; }
 .wordmark-mark { width: 30px; height: 34px; display: inline-grid; place-items: center; background: var(--lime); color: var(--ink); font: 700 17px/1 var(--display); clip-path: polygon(0 0,100% 0,100% 100%,50% 77%,0 100%); }
@@ -108,6 +109,8 @@ h1, h2, h3, p, figure { margin-top: 0; }
 .design-caption { display: flex; align-items: start; justify-content: space-between; gap: 8px; padding: 17px 0 0; }
 .design-caption h3 { margin: 0 0 5px; font: 600 19px/1.1 var(--display); letter-spacing: -.04em; }
 .design-caption p { margin: 0; color: #596c63; font-size: 11px; line-height: 1.45; }
+.design-price { display: inline-block; margin-top: 9px; color: var(--ink); font: 700 15px/1 var(--display); }
+.design-price i { color: #526a61; font: 500 10px/1 var(--body); font-style: normal; }
 .photo-count { flex: 0 0 auto; padding-top: 3px; color: #53746b; font-size: 9px; font-weight: 700; }
 
 .catalog { padding: 96px 10vw 120px; background: #e9e3ce; }
@@ -125,6 +128,8 @@ h1, h2, h3, p, figure { margin-top: 0; }
 .catalog-card img { display: block; width: 100%; aspect-ratio: .73; object-fit: cover; background: var(--white); box-shadow: 7px 8px 0 rgba(18,63,67,.12); transition: transform .35s cubic-bezier(.18,.75,.22,1), box-shadow .35s ease; }
 .catalog-card:hover img, .catalog-card:focus-visible img { transform: translateY(-6px) rotate(-1deg); box-shadow: 11px 14px 0 rgba(18,63,67,.2); }
 .catalog-code { display: block; padding-top: 11px; font: 600 12px/1 var(--display); letter-spacing: .01em; }
+.catalog-price { display: block; padding-top: 6px; color: #435d55; font-size: 11px; font-weight: 700; }
+.catalog-shipping-note { margin: 34px 0 0; color: #3e5a51; font-size: 12px; font-weight: 600; }
 .catalog-empty, .catalog-error { margin: 35px 0 0; color: #526a61; font-size: 14px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
@@ -134,6 +139,9 @@ h1, h2, h3, p, figure { margin-top: 0; }
 .closing h2 em { color: var(--white); }
 .closing > a { display: inline-flex; gap: 18px; align-items: center; padding-bottom: 6px; border-bottom: 1px solid var(--ink); font-size: 13px; font-weight: 700; }
 .closing > a span { font-size: 19px; }
+.closing .order-note { margin: 0 0 12px; font-size: 14px; letter-spacing: 0; text-transform: none; }
+.closing .order-whatsapp, .closing .order-email { min-width: 236px; justify-content: center; margin-bottom: 9px; padding: 13px 18px; border: 0; background: var(--ink-deep); color: var(--lime); }
+.closing .order-email { margin-bottom: 22px; background: var(--white); color: var(--ink-deep); }
 .closing-flower, .closing-scribble { position: absolute; color: var(--lime); font-size: 84px; }
 .closing-flower { left: 15%; top: 23%; transform: rotate(-12deg); }
 .closing-scribble { right: 16%; bottom: 18%; font-size: 58px; transform: rotate(20deg); }
@@ -171,6 +179,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e35e49; outline-offs
 }
 @media (max-width: 620px) {
   .topbar { height: 68px; padding: 0 20px; }
+  .site-notice { min-height: 32px; padding: 8px 12px; font-size: 10px; }
   .wordmark { font-size: 18px; }
   .topbar nav { gap: 0; font-size: 12px; }
   .topbar nav > a:first-child { display: none; }
@@ -213,6 +222,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #e35e49; outline-offs
   .design-caption { display: block; padding-top: 12px; }
   .design-caption h3 { font-size: 17px; }
   .design-caption p { font-size: 10px; }
+  .design-price { margin-top: 7px; font-size: 14px; }
   .photo-count { display: block; margin-top: 7px; font-size: 9px; }
   .catalog { padding: 75px 22px 85px; }
   .catalog-heading { align-items: start; flex-direction: column; gap: 22px; }
